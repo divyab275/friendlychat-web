@@ -184,9 +184,10 @@ function authStateObserver(user) {
     userNameElement.setAttribute('hidden', 'true');
     userPicElement.setAttribute('hidden', 'true');
     signOutButtonElement.setAttribute('hidden', 'true');
+    // window.location.href = "http://localhost:5000/index.html"
+    window.location.replace( "http://localhost:5000/index.html")
 
     // Show sign-in button.
-    signInButtonElement.removeAttribute('hidden');
   }
 }
 
