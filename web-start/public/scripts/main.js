@@ -16,6 +16,11 @@
 'use strict';
 
 // Signs-in Friendly Chat.
+// const firebase = require("firebase");
+// // Required for side-effects
+// require("firebase/firestore");
+var db = firebase.firestore();
+
 function signIn() {
   // Sign into Firebase using popup auth & Google as the identity provider.
   var provider = new firebase.auth.GoogleAuthProvider();
@@ -346,6 +351,50 @@ var userNameElement = document.getElementById('user-name');
 var signInButtonElement = document.getElementById('sign-in');
 var signOutButtonElement = document.getElementById('sign-out');
 var signInSnackbarElement = document.getElementById('must-signin-snackbar');
+var subsribeButton = document.getElementById('subscribe')
+var unSubsribeButton = document.getElementById('unsubscribe')
+
+
+subsribeButton.addEventListener('click',function(){
+  var checkboxes = document.getElementsByName('subscriptions');
+  var checkboxesChecked = [];
+  // loop over them all
+  for (var i=0; i<checkboxes.length; i++) {
+     // And stick the checked ones onto an array...
+     if (checkboxes[i].check ) {
+        checkboxesChecked.push(checkboxes[i]);
+     }
+  }
+  //Returns all checkboxes should return only checcked ones...
+  console.log(checkboxes)
+  checkboxes = []
+  checkboxes.push({
+    name : getUserName(),
+    tag : "sports"
+  })
+  checkboxes.push({
+    name : getUserName(),
+    tag : "weather"
+  })
+  addToDataBase(checkboxes)
+})
+
+var addToDataBase = function(checkboxes){
+ 
+  var db = firebase.firestore();
+  var batch = db.batch()
+  checkboxes.forEach((doc) => {
+  var docRef = db.collection("subscriptions").doc(); //automatically generate unique id
+  batch.set(docRef, doc);
+  });
+  batch.commit()
+}
+
+var deleteFromDatabase = function(data){
+
+}
+
+
 
 // Saves message on form submit.
 try{
@@ -403,11 +452,89 @@ function loadMessages() {
     });
   });
 }
+db.collection("subscriptions").where("name", "==","DIVYA B")
+    .onSnapshot(function(querySnapshot) {
+        var subscriptons = [];
+        querySnapshot.forEach(function(doc) {
+            console.log(doc.data())
+            subscriptons.push(doc.data().tag);
+        });
+        console.log("Current subscriptions : ", subscriptons.join(", "));
+        console.log(subscriptons)
+        displaySubscriptionContent(subscriptons)
+    });
 
-window.document.onload = function(){
+var displaySubscriptionContent = function(subscripitons){
+  for(var i = 0; i <subscripitons.length;i++){
+      console.log(subscripitons[i])
+      db.collection(subscripitons[i]).where("name", "==", "DIVYA B")
+      .get()
+      .then(function(querySnapshot) {
+        var data = []
+          querySnapshot.forEach(function(doc) {
+              // doc.data() is never undefined for query doc snapshots
+              data.push(doc.data())
+              console.log(doc.id, " => ", doc.data());
+          });
+          addToFrontEnd(data)
+      })
+      .catch(function(error) {
+          console.log("Error getting documents: ", error);
+      });
+  }
+}
+
+var addToFrontEnd = function(data){
+  var container = document.getElementsByName('container')[0]
+  console.log(container)
+  console.log(data)
+  var innHTML = ""
+  for(var i = 0; i < data.length; i++){
+    var inner = '<div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">  <div class="mdl-card__supporting-text">'+data[i].text+'</div></div>'
+    innHTML += inner
+  }
+  console.log(innHTML)
+  container.innerHTML = innHTML
+  
+}
+
+
+function loadTags(){
+  var query = firebase.firestore().collection("tags")
+  var tagList = []
+  var innHTML = ""
+  var tagElement = document.getElementById('tagList')
+  query.onSnapshot(function(snapshot) {
+    snapshot.docChanges().forEach(function(change) {
+      tagList.push(tagName)
+      var tagName = change.doc.data()
+      
+      var inner = '<li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons mdl-list__item-icon">tag</i>'+tagName.name;
+      inner+='</span><span class="mdl-list__item-secondary-action"><label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"' ;
+      inner += 'for="list-checkbox-1"><input type="checkbox" name = "subscriptions" id="list-checkbox-1" class="mdl-checkbox__input" /></label></span></li>';
+      innHTML += inner
+      tagElement.innerHTML = innHTML
+      // console.log(innHTML)
+    
+    });
+  });
+  console.log(tagList)
+  console.log(innHTML)
+  var tagElement = document.getElementById('tagList')
+  // tagElement.innerHTML = innHTML
+  
+}
+loadTags()
+
+window.onload = function(){
   console.log("Inside onload function")
+  // var subscriptions = firebase.firestore().collection('subscriptions').where("name", "==", "DIVYA B")
+  
+
+  // console.log(subscriptions)
     var profilePicUrl = getProfilePicUrl();
     var userName = getUserName();
     userPicElement.style.backgroundImage = 'url(' + addSizeToGoogleProfilePic(profilePicUrl) + ')';
     userNameElement.textContent = userName;
+    
 }
