@@ -36,10 +36,10 @@ function signInUser() {
 
 
   // Initiate firebase auth.
-function initFirebaseAuth() {
-    // Listen to auth state changes.
-    firebase.auth().onAuthStateChanged(authStateObserver);
-  }
+// function initFirebaseAuth() {
+//     // Listen to auth state changes.
+//     firebase.auth().onAuthStateChanged(authStateObserver);
+//   }
   
   // Returns the signed-in user's profile Pic URL.
   function getProfilePicUrl() {
@@ -57,37 +57,17 @@ function initFirebaseAuth() {
   
  
 
-  function authStateObserver(user) {
-    if (user) { // User is signed in!
-      // Get the signed-in user's profile pic and name.
-      var profilePicUrl = getProfilePicUrl();
-      var userName = getUserName();
+  // function authStateObserver(user) {
+  //   if (user) { // User is signed in!
+      
+  //     // saveMessagingDeviceToken();
+  //   } else { // User is signed out!
+      
+  //     window.location.replace( "http://localhost:5000/index.html")
   
-      // Set the user's profile pic and name.
-      userPicElement.style.backgroundImage = 'url(' + addSizeToGoogleProfilePic(profilePicUrl) + ')';
-      userNameElement.textContent = userName;
-  
-      // Show user's profile and sign-out button.
-      userNameElement.removeAttribute('hidden');
-      userPicElement.removeAttribute('hidden');
-      signOutButtonElement.removeAttribute('hidden');
-  
-      // Hide sign-in button.
-      signInButtonElement.setAttribute('hidden', 'true');
-  
-      // We save the Firebase Messaging Device token and enable notifications.
-      saveMessagingDeviceToken();
-    } else { // User is signed out!
-      // Hide user's profile and sign-out button.
-      userNameElement.setAttribute('hidden', 'true');
-      userPicElement.setAttribute('hidden', 'true');
-      signOutButtonElement.setAttribute('hidden', 'true');
-      // window.location.href = "http://localhost:5000/index.html"
-      window.location.replace( "http://localhost:5000/index.html")
-  
-      // Show sign-in button.
-    }
-  }
+  //     // Show sign-in button.
+  //   }
+  // }
   
   // Returns true if user is signed-in. Otherwise false and displays a message.
   function checkSignedInWithMessage() {
@@ -105,4 +85,4 @@ function initFirebaseAuth() {
     return false;
   }
   // initialize Firebase
-initFirebaseAuth();
+// initFirebaseAuth();

@@ -57,6 +57,21 @@ main, #messages-card {
   height: calc(100% - 80px);
   display: flex;
   flex-direction: column;
+  
+}
+.demo-list-control {
+  width: 300px;
+}
+
+.demo-list-radio {
+  display: inline;
+}
+.demo-list-control {
+  width: 300px;
+}
+
+.demo-list-radio {
+  display: inline;
 }
 #message-filler {
   flex-grow: 1;
