@@ -169,7 +169,7 @@ function authStateObserver(user) {
     // Get the signed-in user's profile pic and name.
     var profilePicUrl = getProfilePicUrl();
     var userName = getUserName();
-
+    getSubscriptions(userName)
     // Set the user's profile pic and name.
     userPicElement.style.backgroundImage = 'url(' + addSizeToGoogleProfilePic(profilePicUrl) + ')';
     userNameElement.textContent = userName;
@@ -452,22 +452,43 @@ function loadMessages() {
     });
   });
 }
-db.collection("subscriptions").where("name", "==","DIVYA B")
+var UserName
+var getSubscriptions = function(userName){
+  UserName = userName
+  db.collection("subscriptions").where("name", "==",userName)
     .onSnapshot(function(querySnapshot) {
+
         var subscriptons = [];
         querySnapshot.forEach(function(doc) {
             console.log(doc.data())
+
             subscriptons.push(doc.data().tag);
         });
         console.log("Current subscriptions : ", subscriptons.join(", "));
         console.log(subscriptons)
-        displaySubscriptionContent(subscriptons)
+        displaySubscriptionContent(subscriptons,userName)
     });
+}
 
-var displaySubscriptionContent = function(subscripitons){
+// db.collection("subscriptions").where("name", "==",UserName)
+
+//     .onSnapshot(function(querySnapshot) {
+
+//         var subscriptons = [];
+//         querySnapshot.forEach(function(doc) {
+//             console.log(doc.data())
+
+//             subscriptons.push(doc.data().tag);
+//         });
+//         console.log("Current subscriptions : ", subscriptons.join(", "));
+//         console.log(subscriptons)
+//         displaySubscriptionContent(subscriptons,UserName)
+//     });
+
+var displaySubscriptionContent = function(subscripitons,userName){
   for(var i = 0; i <subscripitons.length;i++){
       console.log(subscripitons[i])
-      db.collection(subscripitons[i]).where("name", "==", "DIVYA B")
+      db.collection(subscripitons[i])
       .get()
       .then(function(querySnapshot) {
         var data = []
@@ -492,9 +513,10 @@ var addToFrontEnd = function(data){
   for(var i = 0; i < data.length; i++){
     var inner = '<div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">  <div class="mdl-card__supporting-text">'+data[i].text+'</div></div>'
     innHTML += inner
+    container.innerHTML = innHTML
   }
   console.log(innHTML)
-  container.innerHTML = innHTML
+  // container.innerHTML = innHTML
   
 }
 
@@ -514,7 +536,7 @@ function loadTags(){
       inner += 'for="list-checkbox-1"><input type="checkbox" name = "subscriptions" id="list-checkbox-1" class="mdl-checkbox__input" /></label></span></li>';
       innHTML += inner
       tagElement.innerHTML = innHTML
-      // console.log(innHTML)
+      console.log(innHTML)
     
     });
   });
