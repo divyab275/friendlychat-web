@@ -82,7 +82,7 @@ main, #messages-card {
 .message-container {
   display: block;
   margin-top: 10px;
-  border-top: 1px solid #f3f3f3;
+  border-top: 1px solid #fcf8f8;
   padding-top: 10px;
   opacity: 0;
   transition: opacity 1s ease-in-out;

@@ -452,10 +452,12 @@ function loadMessages() {
     });
   });
 }
+
 var UserName
 var getSubscriptions = function(userName){
   UserName = userName
   db.collection("subscriptions").where("name", "==",userName)
+  db.collection("subscriptions").where("name", "==","DIVYA B")
     .onSnapshot(function(querySnapshot) {
 
         var subscriptons = [];
@@ -468,6 +470,38 @@ var getSubscriptions = function(userName){
         console.log(subscriptons)
         displaySubscriptionContent(subscriptons,userName)
     });
+}
+var checks = []
+
+
+
+function subscribe(id) {
+  var x = document.getElementById(id).checked;
+  if(x){
+    if(!checks.includes(id)){
+      checks.push(id);
+    }
+    
+  }else{
+    if(checks.includes(id)){
+
+     checks =  checks.filter(function(ele){
+        return ele != id;
+       });
+      
+    }
+  }
+}
+
+
+
+
+function myFunction() {
+  // checks.forEach(function (element){
+  //   document.getElementById("demo").innerHTML = element;
+  // })
+  document.getElementById("demo").innerHTML = checks;
+
 }
 
 // db.collection("subscriptions").where("name", "==",UserName)
@@ -559,4 +593,5 @@ window.onload = function(){
     userPicElement.style.backgroundImage = 'url(' + addSizeToGoogleProfilePic(profilePicUrl) + ')';
     userNameElement.textContent = userName;
     
+>>>>>>> fccd3350f8858966c9c8eccd33fe3c02c1495e6b
 }
