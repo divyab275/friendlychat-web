@@ -1,16 +1,68 @@
-# Firebase Codelab: FriendlyChat
+# HACK KOCHI CHAT APP
 
-This is the source code for the Firebase FriendlyChat codelab. It includes start and end versions of the
-code for Web, Cloud Functions, Performance Monitoring. To get started, open the codelab instructions:
-
- - [Firebase Web Codelab](https://codelabs.developers.google.com/codelabs/firebase-web/).
- - [Firebase SDK for Cloud Functions Codelab](https://codelabs.developers.google.com/codelabs/firebase-cloud-functions/).
- - [Firebase Performance Monitoring for Web Codelab](https://codelabs.developers.google.com/codelabs/firebase-perf-mon-web/).
-
-
-## How to make contributions?
-Please read and follow the steps in the [CONTRIBUTING.md](CONTRIBUTING.md)
-
+This is the source code for the chat app we developed based on publish subscribe architecture.The various features incorporated includes:
+ * firebase database
+ * javascript backend
+ * real time application
+ * simple html/css frontend which allows publishers to send both text messages and images
+### Folder Structure Conventions
+Follow the directory structure of the project
+``` bash
+. 
+├── ... 
+├── web 
+│   ├── functions 
+│   └──public 
+│       ├── images 
+│       ├── scripts 
+│       └──styles 
+├──web-start 
+│   ├── functions 
+│   └── public 
+│       ├── images 
+│       ├── scripts 
+│       └── styles 
+├── performance-monitoring 
+│   └── public 
+│       ├── images 
+│       ├── scripts 
+│       └── styles 
+├── performance-monitoring-start 
+│   └──public 
+│       ├── images 
+│       ├── scripts 
+│       └── styles 
+├──	cloud-functions 
+│   ├── functions 
+│   └──public 
+│       ├── images 
+│       ├── scripts 
+│       └── styles 
+├──cloud-functions-start 
+│   ├── functions 
+│   └── public 
+│       ├── images 
+│       ├── scripts 
+│       └── styles 
+├──cloud-functions-angular 
+│   ├── e2e 
+│   ├── functions 
+│   └── src 
+│       ├── app 
+│       ├── assets 
+│       │   └──images 
+│       └── environment 
+├──cloud-functions-angular-start 
+│   ├── e2e 
+│   ├── functions 
+│   └── src 
+│       ├── app 
+│       ├── assets 
+│       │   └── images 
+│       └── environment                
+│     
+└── ... 
+```
 
 ## License
 See [LICENSE](LICENSE)
