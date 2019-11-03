@@ -368,6 +368,7 @@ subsribeButton.addEventListener('click',function(){
   //Returns all checkboxes should return only checcked ones...
   //console.log(checkboxes)
   checkboxes = []
+
   checkboxes.push({
     name : getUserName(),
     tag : "sports"
@@ -475,17 +476,20 @@ var checks = []
 
 
 function subscribe(id) {
+  var obj = {}
+  obj.name = getUserName()
+  obj.tag = id
   var x = document.getElementById(id).checked;
   if(x){
-    if(!checks.includes(id)){
-      checks.push(id);
+    if(!checks.includes(obj)){
+      checks.push(obj);
     }
     
   }else{
-    if(checks.includes(id)){
+    if(checks.includes(obj)){
 
      checks =  checks.filter(function(ele){
-        return ele != id;
+        return ele != obj;
        });
       
     }
@@ -499,8 +503,18 @@ function myFunction() {
   // checks.forEach(function (element){
   //   document.getElementById("demo").innerHTML = element;
   // })
-  document.getElementById("demo").innerHTML = checks;
+  // console.log("hello")
+  // document.getElementById("demo").innerHTML = checks;
+  
 
+    var db = firebase.firestore();
+    var batch = db.batch()
+    checks.forEach((doc) => {
+    var docRef = db.collection("subscriptions").doc(); //automatically generate unique id
+    batch.set(docRef, doc);
+    });
+    batch.commit()
+    getSubscriptions(firebase.getUserName())
 }
 
 // db.collection("subscriptions").where("name", "==",UserName)
@@ -551,7 +565,7 @@ var addToFrontEnd = function(data){
     console.log("This is an image")
     var inner = '<div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">  <div class="mdl-card__supporting-text"><img src = "'+data.imageUrl+'"/></div></div>'
     container.innerHTML += inner
-    console.log(container.innerHTML)
+    // console.log(container.innerHTML)
   }
   else{
     var inner = '<div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">  <div class="mdl-card__supporting-text">'+data.text+'</div></div>'
@@ -578,10 +592,10 @@ function loadTags(){
       // console.log(tagName)
       var inner = '<li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons mdl-list__item-icon">tag</i>'+tagName.name;
       inner+='</span><span class="mdl-list__item-secondary-action"><label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"' ;
-      inner += 'for="list-checkbox-1"><input type="checkbox" name = "subscriptions" id="list-checkbox-1" class="mdl-checkbox__input" /></label></span></li>';
+      inner += 'for="list-checkbox-1"><input type="checkbox" name = "subscriptions" id="'+tagName.name+'" onclick="subscribe(id)" class="mdl-checkbox__input" /></label></span></li>';
       innHTML += inner
       tagElement.innerHTML = innHTML
-      //console.log(innHTML)
+      // console.log(innHTML)
     
     });
   });
