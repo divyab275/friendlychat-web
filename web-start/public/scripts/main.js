@@ -366,7 +366,7 @@ subsribeButton.addEventListener('click',function(){
      }
   }
   //Returns all checkboxes should return only checcked ones...
-  console.log(checkboxes)
+  //console.log(checkboxes)
   checkboxes = []
   checkboxes.push({
     name : getUserName(),
@@ -416,7 +416,7 @@ mediaCaptureElement.addEventListener('change', onMediaFileSelected);
 
 }
 catch(err){
-  console.log(err)
+  //console.log(err)
 }
 
 // initialize Firebase
@@ -457,17 +457,16 @@ var UserName
 var getSubscriptions = function(userName){
   UserName = userName
   db.collection("subscriptions").where("name", "==",userName)
-  db.collection("subscriptions").where("name", "==","DIVYA B")
     .onSnapshot(function(querySnapshot) {
 
         var subscriptons = [];
         querySnapshot.forEach(function(doc) {
-            console.log(doc.data())
+            //console.log(doc.data())
 
             subscriptons.push(doc.data().tag);
         });
-        console.log("Current subscriptions : ", subscriptons.join(", "));
-        console.log(subscriptons)
+        //console.log("Current subscriptions : ", subscriptons.join(", "));
+        // console.log(subscriptons)
         displaySubscriptionContent(subscriptons,userName)
     });
 }
@@ -510,46 +509,58 @@ function myFunction() {
 
 //         var subscriptons = [];
 //         querySnapshot.forEach(function(doc) {
-//             console.log(doc.data())
+//             //console.log(doc.data())
 
 //             subscriptons.push(doc.data().tag);
 //         });
-//         console.log("Current subscriptions : ", subscriptons.join(", "));
-//         console.log(subscriptons)
+//         //console.log("Current subscriptions : ", subscriptons.join(", "));
+//         //console.log(subscriptons)
 //         displaySubscriptionContent(subscriptons,UserName)
 //     });
 
 var displaySubscriptionContent = function(subscripitons,userName){
+  var data = []
   for(var i = 0; i <subscripitons.length;i++){
-      console.log(subscripitons[i])
+      //console.log(subscripitons[i])
       db.collection(subscripitons[i])
       .get()
       .then(function(querySnapshot) {
-        var data = []
+        
           querySnapshot.forEach(function(doc) {
               // doc.data() is never undefined for query doc snapshots
               data.push(doc.data())
-              console.log(doc.id, " => ", doc.data());
+              // console.log(doc.data())
+              addToFrontEnd(doc.data())
+              //console.log(doc.id, " => ", doc.data());
           });
-          addToFrontEnd(data)
+          
+         
       })
       .catch(function(error) {
-          console.log("Error getting documents: ", error);
+          //console.log("Error getting documents: ", error);
       });
   }
+  // console.log(data)
+  // addToFrontEnd(data)
 }
 
 var addToFrontEnd = function(data){
+  // console.log("insed")
   var container = document.getElementsByName('container')[0]
-  console.log(container)
-  console.log(data)
-  var innHTML = ""
-  for(var i = 0; i < data.length; i++){
-    var inner = '<div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">  <div class="mdl-card__supporting-text">'+data[i].text+'</div></div>'
-    innHTML += inner
-    container.innerHTML = innHTML
+  if('imageUrl' in data){
+    console.log("This is an image")
+    var inner = '<div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">  <div class="mdl-card__supporting-text"><img src = "'+data.imageUrl+'"/></div></div>'
+    container.innerHTML += inner
+    console.log(container.innerHTML)
   }
-  console.log(innHTML)
+  else{
+    var inner = '<div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">  <div class="mdl-card__supporting-text">'+data.text+'</div></div>'
+    container.innerHTML += inner
+    console.log("This is text")
+  }
+  
+  
+  //console.log(innHTML)
   // container.innerHTML = innHTML
   
 }
@@ -562,20 +573,20 @@ function loadTags(){
   var tagElement = document.getElementById('tagList')
   query.onSnapshot(function(snapshot) {
     snapshot.docChanges().forEach(function(change) {
-      tagList.push(tagName)
+      //console.log(tagName)
       var tagName = change.doc.data()
-      
+      // console.log(tagName)
       var inner = '<li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons mdl-list__item-icon">tag</i>'+tagName.name;
       inner+='</span><span class="mdl-list__item-secondary-action"><label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"' ;
       inner += 'for="list-checkbox-1"><input type="checkbox" name = "subscriptions" id="list-checkbox-1" class="mdl-checkbox__input" /></label></span></li>';
       innHTML += inner
       tagElement.innerHTML = innHTML
-      console.log(innHTML)
+      //console.log(innHTML)
     
     });
   });
-  console.log(tagList)
-  console.log(innHTML)
+  //console.log(tagList)
+  //console.log(innHTML)
   var tagElement = document.getElementById('tagList')
   // tagElement.innerHTML = innHTML
   
@@ -583,15 +594,15 @@ function loadTags(){
 loadTags()
 
 window.onload = function(){
-  console.log("Inside onload function")
+  //console.log("Inside onload function")
   // var subscriptions = firebase.firestore().collection('subscriptions').where("name", "==", "DIVYA B")
   
 
-  // console.log(subscriptions)
-    var profilePicUrl = getProfilePicUrl();
-    var userName = getUserName();
-    userPicElement.style.backgroundImage = 'url(' + addSizeToGoogleProfilePic(profilePicUrl) + ')';
-    userNameElement.textContent = userName;
+  // //console.log(subscriptions)
+    // var profilePicUrl = getProfilePicUrl();
+    // var userName = getUserName();
+    // userPicElement.style.backgroundImage = 'url(' + addSizeToGoogleProfilePic(profilePicUrl) + ')';
+    // userNameElement.textContent = userName;
     
->>>>>>> fccd3350f8858966c9c8eccd33fe3c02c1495e6b
+
 }
