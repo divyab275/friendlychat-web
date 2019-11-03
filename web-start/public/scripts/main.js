@@ -398,3 +398,36 @@ function loadMessages() {
     });
   });
 }
+
+
+var checks = []
+
+
+
+function subscribe(id) {
+  var x = document.getElementById(id).checked;
+  if(x){
+    if(!checks.includes(id)){
+      checks.push(id);
+    }
+    
+  }else{
+    if(checks.includes(id)){
+
+     checks =  checks.filter(function(ele){
+        return ele != id;
+       });
+      
+    }
+  }
+}
+
+
+
+
+function myFunction() {
+  // checks.forEach(function (element){
+  //   document.getElementById("demo").innerHTML = element;
+  // })
+  document.getElementById("demo").innerHTML = checks;
+}
