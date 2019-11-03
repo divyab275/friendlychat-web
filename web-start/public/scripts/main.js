@@ -170,20 +170,18 @@ function authStateObserver(user) {
     userNameElement.textContent = userName;
 
     // Show user's profile and sign-out button.
-    userNameElement.removeAttribute('hidden');
-    userPicElement.removeAttribute('hidden');
-    signOutButtonElement.removeAttribute('hidden');
+    
 
     // Hide sign-in button.
-    signInButtonElement.setAttribute('hidden', 'true');
+    
 
     // We save the Firebase Messaging Device token and enable notifications.
     saveMessagingDeviceToken();
   } else { // User is signed out!
     // Hide user's profile and sign-out button.
-    userNameElement.setAttribute('hidden', 'true');
-    userPicElement.setAttribute('hidden', 'true');
-    signOutButtonElement.setAttribute('hidden', 'true');
+    // userNameElement.setAttribute('hidden', 'true');
+    // userPicElement.setAttribute('hidden', 'true');
+    // signOutButtonElement.setAttribute('hidden', 'true');
     // window.location.href = "http://localhost:5000/index.html"
     window.location.replace( "http://localhost:5000/index.html")
 
@@ -350,9 +348,11 @@ var signOutButtonElement = document.getElementById('sign-out');
 var signInSnackbarElement = document.getElementById('must-signin-snackbar');
 
 // Saves message on form submit.
-messageFormElement.addEventListener('submit', onMessageFormSubmit);
-signOutButtonElement.addEventListener('click', signOut);
-signInButtonElement.addEventListener('click', signIn);
+try{
+  signOutButtonElement.addEventListener('click', signOut);
+  messageFormElement.addEventListener('submit', onMessageFormSubmit);
+  
+
 
 // Toggle for the button.
 messageInputElement.addEventListener('keyup', toggleButton);
@@ -364,6 +364,11 @@ imageButtonElement.addEventListener('click', function(e) {
   mediaCaptureElement.click();
 });
 mediaCaptureElement.addEventListener('change', onMediaFileSelected);
+
+}
+catch(err){
+  console.log(err)
+}
 
 // initialize Firebase
 initFirebaseAuth();
@@ -397,4 +402,12 @@ function loadMessages() {
       }
     });
   });
+}
+
+window.document.onload = function(){
+  console.log("Inside onload function")
+    var profilePicUrl = getProfilePicUrl();
+    var userName = getUserName();
+    userPicElement.style.backgroundImage = 'url(' + addSizeToGoogleProfilePic(profilePicUrl) + ')';
+    userNameElement.textContent = userName;
 }

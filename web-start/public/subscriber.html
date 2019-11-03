@@ -63,14 +63,12 @@
         <h3><i class="material-icons">chat_bubble_outline</i> Friendly Chat</h3>
       </div>
       <div id="user-container">
-        <div hidden id="user-pic"></div>
-        <div hidden id="user-name"></div>
-        <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+        <div id="user-pic"></div>
+        <div id="user-name"></div>
+        <button id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
           Sign-out
         </button>
-        <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-          <i class="material-icons">account_circle</i>Sign-in with Google
-        </button>
+        
       </div>
     </div>
   </header>
@@ -132,26 +130,13 @@
                   </ul>
 
           </div>
-          <form id="message-form" action="#">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" hidden type="text" id="message" autocomplete="off">
-              <label class="mdl-textfield__label" hidden for="message">Message...</label>
-            </div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input"  hidden type="text" id="tag" autocomplete="off">
-              <label class="mdl-textfield__label" hidden for="tag">Tag</label>
-            </div>
-            <button id="subscribe"  type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-              <p>Subscribe</p>
-            </button>
-          </form>
-          <form id="image-form" action="#">
-            <input id="mediaCapture" hidden type="file" accept="image/*" capture="camera">
-            <button id="submitImage" hidden title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
-              <i hidden class="material-icons">image</i>
-            </button>
-            
-          </form>
+          <button id="subscribe"  type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+            <p>Subscribe</p>
+          </button>
+          <button id="unsubscribe"  type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+            <p>Unsubscribe</p>
+          </button>
+
         </div>
       </div>
 
