@@ -64,5 +64,38 @@ Follow the directory structure of the project
 └── ... 
 ```
 
+## Local Setup
+
+1. Install the CLI by running the following npm command:
+```
+npm -g install firebase-tools
+```
+
+2.Authorize the Firebase CLI by running the following command:
+```
+firebase login
+```
+
+3. With your command line accessing your app's local web-start directory, associate Hack Kochi chat app with your Firebase project by running the following command:
+```
+firebase use --add
+```
+
+4. In the console from the web-start directory
+```
+firebase serve --only hosting
+```
+
+5. Import the Firebase SDK
+6. Configure Firebase
+
+## HOSTING 
+Files were deployed to the Firebase project by running the following command:
+```
+firebase deploy --except functions
+
+```
+And finally visit Hack Kochi Chat App that's now fully hosted using Firebase Hosting:)
+
 ## License
 See [LICENSE](LICENSE)
