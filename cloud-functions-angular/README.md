@@ -1,6 +1,6 @@
-# Firebase SDK for Cloud Functions (Angular) Codelab - Start code
+# Firebase SDK for Cloud Functions (Angular) - Start code
 
-This folder contains the start code of the [Firebase SDK for Cloud Functions (Angular) Codelab](https://codelabs.developers.google.com/codelabs/firebase-cloud-functions-angular/).
+This folder contains the start code of the [Firebase SDK for Cloud Functions (Angular)](https://codelabs.developers.google.com/codelabs/firebase-cloud-functions-angular/).
 
 If you'd like to jump directly to the end and see the finished code head to the [cloud-functions-angular](../cloud-functions-angular) directory.
 
